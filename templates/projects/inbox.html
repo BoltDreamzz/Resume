@@ -1,0 +1,16 @@
+<!-- your_app/templates/your_app/inbox.html -->
+{% extends 'partials/base.html' %}
+{% block title %}Inbox{% endblock title %}
+
+{% block content %}
+
+
+<h1>Inbox</h1>
+
+{% for convo in conversations %}
+    <a href="{% url 'projects:conversation_detail' conversation_id=convo.id %}" class="text-decoration-none text-primary">
+        {{ convo.sender.username }} - {{ convo.timestamp }}
+    </a>
+    <br>
+{% endfor %}
+{% endblock %}

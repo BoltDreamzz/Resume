@@ -1,0 +1,257 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Index{% endblock title %}
+
+
+{% block content %}
+
+<style>
+    .small {
+        font-size: 1.5em;
+        font-weight: 600;
+
+    }
+
+    .Biggie {
+        font-weight: 700;
+        font-size: 2.8em;
+        text-transform: uppercase;
+        display: inline-block;
+        position: relative;
+        left: -10%;
+        opacity: 0;
+        transition: left .6s ease-out;
+    }
+
+    .Biggie.slide-in {
+        left: 0;
+        opacity: 1;
+    }
+
+    .follow {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+
+    .pad {
+        padding: 7px 27px;
+    }
+
+    .myy {
+        border-radius: 12px;
+        margin-top: 10px;
+    }
+
+    .containerer {
+        margin-top: 10%;
+    }
+
+    .section-2 {
+        display: flex;
+        margin: 30px 0;
+        gap: 10px;
+        padding: 10px 8px;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .right {
+        padding: 40px 35px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.637);
+    }
+
+    .right h4 {
+        font-weight: 700;
+        font-size: 2.6em;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 40px 35px;
+        border-radius: 20px;
+        background: rgba(223, 223, 223, 0.637);
+        /* z-index: 111; */
+    }
+
+    .left .row {
+        height: 100%;
+        width: 100%;
+        /* margin: 10px 10px; */
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .left .row img {
+        width: 100px;
+        height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+    }
+
+    .leadup {
+        font-weight: 700;
+        font-size: 1.3em;
+    }
+
+    .leadup-small {
+        font-weight: 400;
+        font-style: .7em;
+        line-height: 20px;
+    }
+
+    .touch {
+        padding: 10px 25px;
+        border-radius: 12px;
+        transition: 0.2s ease;
+    }
+
+    .touch:hover {
+        scale: 1;
+    }
+</style>
+
+<div class="container containerer my-4">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <div class="col-lg-6 p-3 p-lg-5 pt-lg-3">
+            <h1 class="small">Hi<br><span class="Biggie">I am Oxford</span></h1>
+            <!--            <h4 class="lead">I am a Web and Graphic Designer</h4>-->
+            <p class="follow">A dynamic individual driven by a passion for knowledge and a relentless pursuit of
+                excellence. </p>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span
+                    class="badge d-flex align-items-center p-1 pe-2 text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill">
+                    <img class="rounded-circle me-1" width="24" height="24" src="https://github.com/mdo.png" alt="">
+                    Python
+                    <span class="vr mx-2"></span>
+                    <a href="#"><i class='bx bxs-badge-check fs-4 text-dark'></i></a>
+                </span>
+                <span
+                    class="badge d-flex align-items-center pe-2 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">
+                    <i class='bx fs-3 bx-medal'></i>JavaScript</span>
+
+                <span
+                    class="badge d-flex align-items-center pe-2 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
+                    <i class='bx fs-3 bx-medal'></i>jquery</span>
+
+            </div>
+            <a href="{% url 'projects:portfolio' %}"
+                class="btn myy btn-outline-dark btn-lg px-4 me-md-2 fw-bold mt-3">My
+                projects</a>
+
+        </div>
+        <div class="col-lg-6 p-0 d-flex align-items-center justify-content-center overflow-hidden">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+            <lottie-player src="https://lottie.host/2c5a8946-5f92-42ab-8502-554b687e70f6/cHIJK9ezer.json"
+                background="##FFFFFF" speed="0.5" style="width: 400px; height: 400px" loop autoplay direction="1"
+                mode="normal"></lottie-player>
+        </div>
+    </div>
+</div><br>
+<hr><br><br>
+<!-- BIGGIE -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const element = document.querySelector('.Biggie');
+        // Trigger the slide-in animation
+        requestAnimationFrame(() => {
+            element.classList.add('slide-in');
+        });
+    });
+
+</script>
+<script>
+    function sendEmail() {
+        var email = document.getElementById('email').value;
+        var subject = document.getElementById('subject').value;
+        var content = document.getElementById('content').value;
+
+        // Construct the mailto URL with pre-filled data
+        var mailtoUrl = 'mailto:' + encodeURIComponent(email) +
+            '?subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(content);
+
+        // Open the user's default email client
+        window.location.href = mailtoUrl;
+    }
+</script>
+<!-- SECOND SIDE -->
+<h4 class="text-center">More</h4>
+
+<div class="container mt-3 section-2">
+    <div class="left col col-lg-6" data-aos="zoom-in-down">
+        <div class="row shadow-sm border">
+            <img src="{%static 'home_media/Monkey.png'%}" alt="">
+
+            <div class="col">
+                <h5 class="leadup">Vince TechMaloo</h5>
+                <p class="leadup-small"><strong>Good job Baddie !</strong>The tech industry will amaze you real soon,
+                    keep up the great work man.</p>
+            </div>
+
+            <!-- <div class="d-flex flex-column gap-1"> -->
+
+            <!-- </div> -->
+        </div>
+        <div class="row">
+            <img src="{%static 'home_media/Barbie.png'%}" data-aos="flip-left" alt="">
+
+            <div class="col" data-aos="flip-up">
+                <h5 class="leadup">Barbie Dreamzz</h5>
+                <p class="leadup-small"><strong>Bolt</strong>, the sweetest and smartest soul i ever know, he would
+                    always want to <span class="text-info">debug</span> and <span class="text-info">center a div</span>.
+                </p>
+            </div>
+
+            <!-- <div class="d-flex flex-column gap-1"> -->
+
+            <!-- </div> -->
+        </div>
+        <div class="row">
+            <img src="{%static 'home_media/web3.jpg'%}" alt="">
+
+            <div class="col">
+                <h5 class="leadup">Anonymous@19</h5>
+                <p class="leadup-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae laborum unde,
+                    totam harum dolor
+                    officiis fugit ut</p>
+            </div>
+
+            <!-- <div class="d-flex flex-column gap-1"> -->
+
+            <!-- </div> -->
+        </div>
+    </div>
+    <div class="right" data-aos="flip-up">
+        <h4>Result Driven</h4>
+        <p>I am a passionate tech enthusiast with a keen interest in software development and innovative technologies..
+        </p>
+        <a href="#" class="btn btn-dark touch disabled" data-aos="flip-down">Get in touch</a>
+    </div>
+</div>
+<div class="container d-flex gap-2">
+    <div class="right" data-aos="flip-down">
+        <h4>Time efficient</h4>
+        <p>I am a passionate tech enthusiast with a keen interest in software development and innovative technologies..
+        </p>
+        <a href="#" class="btn btn-dark touch disabled" data-aos="flip-up">Get in touch</a>
+    </div>
+    <div class="right" data-aos="flip-up">
+        <h4>AI Integration</h4>
+        <p>I am a passionate tech enthusiast with a keen interest in software development and innovative technologies..
+        </p>
+        <a href="#" class="btn btn-dark touch disabled" data-aos="flip-down">Get in touch</a>
+    </div>
+</div>
+<script>
+    document.getElementById("hireMeButton").addEventListener("click", function () {
+        window.location.href = "contact.html/";
+    });
+</script>
+{% endblock %}

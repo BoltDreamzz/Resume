@@ -1,0 +1,165 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Detail{% endblock title %}
+
+{% block content %}
+<style>
+    /* Add your custom styles here */
+    .like-icon,
+    .comment-icon {
+        cursor: pointer;
+        font-size: 1.5rem;
+        /* Adjust the font size as needed */
+    }
+
+    .liked {
+        color: #e44d26;
+        /* Color when the post is liked */
+    }
+
+    #commentBox textarea {
+        padding-top: 10px;
+        height: 50px;
+        /* Adjust the height of the textarea */
+        border-radius: 20px;
+    }
+    .cont {
+        margin-top: 10%;
+    }
+</style>
+
+<div class="container cont d-flex flex-column justify-content-center">
+    <div class="col mb-3 mt-3">
+        <a href="{% url 'projects:portfolio' %}" class="btn btn-dark mx-3 shadow-sm"><i
+                class="bi bi-chevron-left"></i></a>
+    </div>
+    <div class="col text-center mb-2 d-flex justify-content-center">
+        <img class="img-fluid position-relative" width="800" src="{{ project.image.url }}" alt="{{ project.title }}">
+    </div>
+    <div class="col text-center mt-5">
+        <h3 class="text-center"><strong>{{ project.title }}</strong></h3>
+        <p class="text-center">{{ project.description }}</p>
+    </div>
+</div>
+<div class="text-center">
+    <div class="container d-flex align-items-center gap-4 justify-content-center">
+        <div class="d-flex align-items-center gap-1">
+            <a href="https://github.com/BoltDreamzz?tab=repositories">
+                <i class="bx bxl-github fs-3 text-dark"></i>
+            </a>
+            <span class="badge bg-success">New</span>
+            <!-- <a href="" class="bx bxl-github fs-3 text-decoration-none text-dark"> -->
+        </div>
+        </a>
+        <a href="#" id="comment" class="bx bx-message-dots fs-3 text-decoration-none text-dark">
+        </a>
+        <!-- <i class='bx bxs-heart-circle'></i> -->
+        <a href="#" id="comment" class="bx bxs-heart-circle fs-3 text-decoration-none text-dark"">
+         </a>
+    </div>
+</div>
+<!--COMMENT-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 mt-3 p-3">
+            <h5 class="text-center">Say something</h5>
+            <form id="commentBox" method="post" action="{% url 'projects:project_detail' project_id=project.id %}"
+                class="mt-4">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+
+                <div class="text-center mt-3">
+                    <button class="btn btn-dark btn-sm w-50" type="submit"><i class="bi bi-send-fill"></i> Add Comment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-5 text-center">
+        <div class="dropdown">
+            <a href="#" class="text-decoration-none dropdown-toggle text-primary" data-bs-toggle="dropdown"
+                aria-expanded="false">Recent comments</a>
+            <div class="dropdown-menu p-4" aria-labelledby="dropdownMenuButton">
+                {% if comments %}
+                <h6>Comments</h6>
+                {% for comment in comments %}
+                <div class="card mb-2 text-white">
+                    <div class="card-body bg-dark rounded-2">
+                        <p class="card-title">{{ comment.text }}</p>
+                        <small class="card-text">{{ comment.date }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h6 class="text-center text-muted"><i class="bi bi-ban"></i> No comments yet</h6>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container-fluid">-->
+<!--    <h5 class="text-center"><strong>Other pages</strong></h5>-->
+<!--    {% if sub_projects %}-->
+<!--    <div class="row my-3">-->
+<!--        &lt;!&ndash; Column 1 &ndash;&gt;-->
+<!--        <div class="col-md-6 my-3">-->
+<!--            <div class="card">-->
+<!--                <img src="{{sub_projects.about_page_image.url}}" class="card-img-top" alt="Image 1">-->
+<!--                &lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--                &lt;!&ndash;          <h5 class="card-title">Card Title 1</h5>&ndash;&gt;-->
+<!--                &lt;!&ndash;          <p class="card-text">Some description for Image 1.</p>&ndash;&gt;-->
+<!--                &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-6 my-3">-->
+<!--            <div class="card">-->
+<!--                <img src="{{sub_projects.detail_page_image.url}}" class="card-img-top" alt="Image 1">-->
+<!--                &lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--                &lt;!&ndash;          <h5 class="card-title">Card Title 1</h5>&ndash;&gt;-->
+<!--                &lt;!&ndash;          <p class="card-text">Some description for Image 1.</p>&ndash;&gt;-->
+<!--                &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% else %}-->
+<!--    <h6 class="text-center mt-3 text-muted">No other images yet</h6>-->
+<!--    {% endif %}-->
+
+<!--</div>-->
+<div class="div d-flex justify-content-end">
+    <button id="scrollToTopBtn" class="btn btn-dark shadow-sm" onclick="scrollToTop()"><i
+            class="bi bi-chevron-bar-up"></i></button>
+</div>
+
+<script>
+    // Front-end logic for likes
+    function toggleLike(projectId) {
+        fetch(`/toggle_like/${projectId}/`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the like icon based on the response
+                const likeIconContainer = document.getElementById('like-icon-container');
+                const likeIcon = document.getElementById('like-icon-project');
+
+                // Check if the project is liked
+                if (data.is_liked) {
+                    likeIcon.textContent = 'Liked';
+                    likeIcon.className = 'bi bi-heart-fill fs-5 fw-bold like-icon';
+                } else {
+                    likeIcon.textContent = '';
+                    likeIcon.className = 'bi bi-heart fs-5 fw-bold like-icon';
+                }
+
+                // Update the like count
+                document.getElementById('like-count-project').textContent = data.likes_count;
+            });
+    };
+    // Function to show alert when the heart icon is clicked
+    function showLikedAlert() {
+        alert("You have liked this post!");
+    };
+</script>
+
+
+{% endblock content %}

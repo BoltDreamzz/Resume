@@ -1,0 +1,38 @@
+<!-- your_app/templates/your_app/conversation_detail.html -->
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Conversation{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3 p-3">
+            <h6 class="text-center"><strong>conversation with {{ conversation.recipient.username }}</strong></h6>
+
+            {% for message in messages %}
+            <div class="my-3 d-flex flex-column">
+                <!--                <strong>{{ message.sender.username }}:</strong> {{ message.content }}-->
+                <h6 class="my-2"><strong>{%if message.sender == request.user%}You{% else %}{{message.sender.username}}{%endif%}</strong></h6>
+                <p>{{ message.content }}</p>
+                <hr>
+
+
+            </div>
+            {% endfor %}
+
+            <form class="mt-2" method="post" action="">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="text-center">
+                    <button class="btn btn-dark w-50 shadow-sm" type="submit"><i class="bi bi-send-fill"></i></button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
