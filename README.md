@@ -10,3 +10,8 @@
 
 #### portfolio
 ![Screenshot 2024-05-29 134140](https://github.com/BoltDreamzz/Resume/assets/150521995/3c17e7e4-5af3-451d-b69b-4f64ad784e42)
+
+
+
+#### sendmail
+![Screenshot 2024-05-29 134459](https://github.com/BoltDreamzz/Resume/assets/150521995/612f9012-4dba-40bb-8192-74f883cdb7c1)
